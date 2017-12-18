@@ -1,5 +1,5 @@
 from django.db.models import BooleanField, Model
 
 
-class SiteSettings(Model):
+class SiteSetting(Model):
     site_closed = BooleanField(default=True)

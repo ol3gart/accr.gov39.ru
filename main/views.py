@@ -21,7 +21,7 @@ from account.models import MassMedia, Reporter
 from accr import settings
 from accr.settings import ACCESS_COVER
 from main.forms import ReporterForm
-from main.models import SiteSettings
+from main.models import SiteSetting
 
 from .forms import ResendActivationEmailForm
 from django.core import signing
@@ -33,7 +33,7 @@ class MainPageView(TemplateView):
     template_name = 'main_page.html'
 
     def dispatch(self, request, *args, **kwargs):
-        site_settings = SiteSettings.objects.first()
+        site_settings = SiteSetting.objects.first()
 
         if site_settings.site_closed:
             self.template_name = 'site_closed.html'
