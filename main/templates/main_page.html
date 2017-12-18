@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Главная - Аккредитация журналистов при Правительстве Калининградской области
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col m12 l6">
+            <p>Аккредитация проводится в период с 30.11.2017 г. по 09.12.2017 г., в соответствии с Правилами
+                аккредитации журналистов средств массовой информации при правительстве Калининградской области,
+                утвержденными постановлением от 02 августа 2010 года № 595.</p>
+            <p>Согласно постановления, аккредитационные удостоверения выдаются СМИ в пределах следующих квот:</p>
+            <p>1) периодические печатные издания – не более 3 человек;</p>
+            <p>2) телевизионные СМИ – не более 3 съемочных групп в составе корреспондента и оператора;</p>
+            <p>3) радиокомпании – не более 2 человек;</p>
+            <p>4) интернет-СМИ – не более 4 человек.</p>
+        </div>
+        <div class="col m12 l6">
+            <form method="post" action="{% url 'auth_login' %}" class="col s12">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="input-field col m12 offset-l3 l9">
+                        <input autofocus="" id="id_username" maxlength="254" name="username" type="text" required="">
+                        <label for="id_username" class="">Имя пользователя</label>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col m12 offset-l3 l9">
+                        <label for="id_password">Пароль</label>
+                        <input id="id_password" name="password" type="password" required="">
+
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col m6 l6 offset-l3">
+                        <button class="btn waves-effect waves-light coral" type="submit"
+                                name="action" style="float: left">
+                            Вход
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                    <div class="col m6 l3 register-large">
+                            <a href="{% url 'registration_register' %}" class="btn waves-effect waves-light blue-grey lighten-3" style="float: right">
+                                Регистрация
+                            </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col m6 l6 offset-l3 register-small">
+                        <button class="btn waves-effect waves-light blue-grey lighten-3" type="submit"
+                                name="action">
+                            Регистрация
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col m6 l6 offset-l3">
+                        <a href="{% url 'auth_password_reset' %}">Забыли пароль?</a>
+                    </div>
+                </div>
+                <input type="hidden" name="next" value="">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <h3 class="coral-text">Порядок проведения<br>аккредитации:</h3>
+            <p align="justify">Для прохождения аккредитации журналистов необходимо зарегистрироваться как СМИ и
+                заполнить регистрационные данные.</p>
+            <p align="justify">Порядок прохождения аккредитации:</p>
+            <p align="justify">- регистрируется РЕДАКТОР СМИ (или сотрудник, уполномоченный это сделать от лица
+                редакции);</p>
+            <p align="justify">- заполняет сведения о СМИ, аккредитуемых сотрудниках (в электронном виде);</p>
+            <p align="justify">- получает сгенерированные формы документов, подписывает их в редакции.</p>
+            <p align="justify">На основании сведений, заполненных в системе, генерируются учетная карточка СМИ и учетные
+                карточки сотрудников. Эти учетные карточки необходимо распечатать, подписать в
+                редакции и предоставить с копиями учредительных документов в обмен на аккредитационные удостоверения 2018 года (при
+                получении)</p>
+            <p align="justify">Для, сотрудников, имеющих аккредитационные удостоверения 2017 года, карточки необходимо
+                будет сдать Урженко Марии (каб. 339, тел 599-994) в срок до 25.12.2017 г.</p>
+            <p align="justify"><strong>Внимание!!! Подать все сведения в электронном виде необходимо до 18:00 09.12.2017
+                года.</strong></p>
+            <p align="justify">Выдача аккредитационных удостоверений будет производиться 22.12.2017 - 29.12.2017 с
+                предварительным информированием о готовности удостоверений по электронной почте.</p>
+            <p align="justify">Аккредитационные удостоверения 2017 года будут действовать до 23:00 31.12.2017 г.</p>
+            <p>Справки по процессу аккредитации: +7 4012 599-971 – Артемов Олег Викторович, e-mail: <a href="mailto:o.artemov@gov39.ru">o.artemov@gov39.ru</a></p>
+            <p>Старая версия сайта: <a href="http://accr2.gov39.ru">http://accr2.gov39.ru</a></p>
+
+        </div>
+    </div>
+{% endblock content %}

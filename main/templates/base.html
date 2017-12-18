@@ -1,0 +1,86 @@
+{% load staticfiles %}
+{% load extras %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>
+        {% block title %}Starter Template - Materialize{% endblock title %}
+    </title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{% static 'main/css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="{% static 'main/css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'main/img/favicon.ico' %}">
+    {#    <script type="text/javascript" src="{% static 'main/js/sorttable.js' %}"></script>#}
+    <script src="{% static 'main/js/jquery-2.1.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/js/jquery.tablesorter.js' %}"></script>
+    {% block css %}{% endblock %}
+</head>
+
+<body>
+<header>
+    <nav class="accr-nav dark-blue">
+        <div class="nav-wrapper container">
+            <a href="/" class="brand-logo accr-logo"></a>
+            <div class="accr-logo-1">
+                <span class="accr-logo-2 hide-on-med-and-down">АККРЕДИТАЦИЯ</span><br>
+                <span class="accr-logo-3 hide-on-med-and-down">СРЕДСТВ МАССОВОЙ ИНФОРМАЦИИ</span>
+                <span class="accr-logo-4 hide-on-med-and-down">
+                {% if user.is_authenticated %}
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    {% if request.user|has_group:"employee" or request.user.is_superuser %}
+                        <li><a href="{% url 'main:access_card' %}">Генерация обложек</a></li>
+                    {% endif %}
+                        <li><a href="{% url 'auth_logout' %}?next=/"> Выйти из системы</a></li>
+                    </ul>
+                {% else %}
+                    ДОБРО ПОЖАЛОВАТЬ!
+                {% endif %}
+            </span>
+                <ul class="side-nav" id="mobile-demo">
+                    {% if request.user|has_group:"employee" or request.user.is_superuser %}
+                        <li><a href="{% url 'main:access_card' %}">Генерация обложек</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'auth_logout' %}?next=/"> Выйти из системы</a></li>
+                </ul>
+            </div>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+        </div>
+    </nav>
+</header>
+
+<main class="container">
+    {% block breadcrumbs %}
+    {% endblock %}
+    <div class="main-content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>
+
+<footer class="page-footer coral no-margin-top container">
+    <div class="row">
+        <div class="col s12">
+            <span class="white-text">&copy; 2016 Правительство Калининградской области</span>
+        </div>
+    </div>
+</footer>
+
+
+<!--  Scripts-->
+
+<script src="{% static 'main/js/materialize.js' %}"></script>
+<script src="{% static 'main/js/init.js' %}"></script>
+
+
+{% block js %}
+{% endblock %}
+<!-- Design by Anastasiya Turulina -->
+<!-- Makeup and web-develop by Oleg Artemov -->
+</body>
+</html>

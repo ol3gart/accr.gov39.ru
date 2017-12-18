@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}Редактирование информации о журналистах{% endblock %}
+
+{% block breadcrumbs %}
+    <!-- BREADCRUMBS -->
+    <div class="row no-margin-bot no-padding-left no-padding-right accr-breadcrumb">
+        <nav>
+            <div class="nav-wrapper">
+                <div class="col s12 accr-gray">
+                    <a href="/" class="breadcrumb">Главная</a>
+                    <a href="{% url 'account:profile' %}" class="breadcrumb">Аккаунт</a>
+                    <a href="" class="breadcrumb">Редактирование информации о журналистах</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {#                {{ form.as_table }}#}
+            <div class="row">
+                <div class="input-field col s12 l8 offset-l2">
+                    {{ form.surname }}
+                    <label for="{{ form.surname.id_for_label }}">Фамилия</label>
+                    {% if form.surname.errors %}
+                        <blockquote>{{ form.surname.errors }}</blockquote>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12 l8 offset-l2">
+                    {{ form.name }}
+                    <label for="{{ form.name.id_for_label }}">Имя</label>
+                    {% if form.name.errors %}
+                        <blockquote>{{ form.name.errors }}</blockquote>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12 l8 offset-l2">
+                    {{ form.lastname }}
+                    <label for="{{ form.lastname.id_for_label }}">Отчество</label>
+                    {% if form.lastname.errors %}
+                        <blockquote>{{ form.lastname.errors }}</blockquote>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12 l8 offset-l2">
+                    <input id="id_post" maxlength="33" name="post" type="text" required="" length="33"
+                            {% if form.post.value %}
+                           value="{{ form.post.value }}">
+                            {% else %}
+                                value="">
+                            {% endif %}
+                    <label for="{{ form.post.id_for_label }}">Должность</label>
+                    {% if form.post.errors %}
+                        <blockquote>{{ form.post.errors }}</blockquote>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="file-field input-field col s12 l8 offset-l2">
+                    <div class="btn">
+                        <span>Фото:</span>
+                        {{ form.image }}
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                    {% if form.image.errors %}
+                        <blockquote>{{ form.image.errors }}</blockquote>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s8 offset-s2 center-align">
+                    <button class="btn waves-effect waves-light blue darken-1" type="submit" name="action">
+                        Изменить сведения
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(document).ready(function () {
+            $('select').material_select();
+        });
+        $(document).ready(function () {
+            $('input#id_post').characterCounter();
+        });
+    </script>
+{% endblock %}

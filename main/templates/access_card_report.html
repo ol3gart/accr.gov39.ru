@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Генерация обложек для пропусков{% endblock %}
+
+{% block breadcrumbs %}
+    <!-- BREADCRUMBS -->
+    <div class="row no-margin-bot no-padding-left no-padding-right accr-breadcrumb">
+        <nav>
+            <div class="nav-wrapper">
+                <div class="col s12 accr-gray">
+                    <a href="/" class="breadcrumb">Главная</a>
+                    <a href="" class="breadcrumb">Генерация обложек для пропусков</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+
+    <!-- PAGE CONTENT -->
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col s12">
+                <table class=" bordered highlight" id="sortable">
+                    <thead>
+                    <tr>
+                        <th data-field="id">№</th>
+                        <th data-field="id" class="center-align">ФИО<i class="large material-icons"
+                                                                       style="font-size: 1rem">swap_vert</i>
+                        </th>
+                        <th data-field="id" class="center-align">Морда лица</th>
+                        <th data-field="name" class="center-align">СМИ<i class="large material-icons"
+                                                                         style="font-size: 1rem">swap_vert</i>
+                        </th>
+                        <th data-field="price" class="center-align">Дата создания<i class="large material-icons"
+                                                                                    style="font-size: 1rem">swap_vert</i>
+                        </th>
+                        <th data-field="price" class="center-align">Дата обновления<i
+                                class="large material-icons" style="font-size: 1rem">swap_vert</i></th>
+                        <th data-field="price" class="center-align">Обложка сформирована?<i
+                                class="large material-icons" style="font-size: 1rem">swap_vert</i></th>
+                        <th data-field="price" class="center-align">Печатать?</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    {% for reporter in reporters %}
+                        <tr>
+                            <td>{{ forloop.counter }} </td>
+                            <td>{{ reporter }}</td>
+
+                            <td>
+                                {% if reporter.image_crop %}
+                                    <img src="{{ reporter.image_crop.url }}" alt="{{ reporter }}"
+                                         class="materialboxed"
+                                         width="35px" data-caption="{{ reporter }}">
+                                {% else %}
+                                    <img src="{% static 'main/img/unknown.jpg' %}" class="materialboxed" width="35px">
+                                {% endif %}
+                            </td>
+
+                            <td>{{ reporter.massmedia }}</td>
+                            <td>{{ reporter.added }}</td>
+                            <td>{{ reporter.updated }}</td>
+                            <td class="center-align">
+                                {% if reporter.printed %}
+                                    <span class="green-text">Да</span>
+                                {% else %}
+                                    <span class="red-text">Нет</span>
+                                {% endif %}
+                            </td>
+                            <td class="center-align">
+                                <input type="checkbox" id="id_{{ reporter.id }}" name="reporter"
+                                       value="{{ reporter.id }}"
+                                       {% if not reporter.printed %}checked{% endif %}/>
+                                <label for="id_{{ reporter.id }}"></label>
+                            </td>
+                            <td></td>
+
+                        </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td colspan="7" class="center-align">
+                            <button class="btn waves-effect waves-light coral" type="submit" name="action">
+                                Напечатать обложки
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </td>
+                        <td class="center-align">
+                            <input type="checkbox" id="id_toggle" onClick="toggle(this)"/>
+                            <label for="id_toggle"></label>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        {#        <div class="row">#}
+        {#            <div class="col s8 offset-s2 center-align">#}
+        {#                <button class="btn waves-effect waves-light coral" type="submit" name="action">#}
+        {#                    Напечатать обложки#}
+        {#                    <i class="material-icons right">send</i>#}
+        {#                </button>#}
+        {#            </div>#}
+        {#            <div class="col s1 offset-s1 center-align">#}
+        {#                <input type="checkbox" id="id_toggle" onClick="toggle(this)"/>#}
+        {#                <label for="id_toggle"></label>#}
+        {#            </div>#}
+        {#        </div>#}
+    </form>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(document).ready(function () {
+                    $("#sortable").tablesorter({
+                        headers: {0: {sorter: false}}
+                    });
+                }
+        );
+    </script>
+    <script>
+        function toggle(source) {
+            checkboxes = document.getElementsByName('reporter');
+            for (var i = 0, n = checkboxes.length; i < n; i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+    </script>
+{% endblock %}

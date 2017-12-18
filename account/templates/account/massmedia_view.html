@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}Сведения об аккредитуемом СМИ{% endblock title %}
+
+{% block breadcrumbs %}
+    <!-- BREADCRUMBS -->
+    <div class="row no-margin-bot no-padding-left no-padding-right accr-breadcrumb">
+        <nav>
+            <div class="nav-wrapper">
+                <div class="col s12 accr-gray">
+                    <a href="/" class="breadcrumb">Главная</a>
+                    <a href="" class="breadcrumb">Аккаунт</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="row">
+        <div class="col s12 m6">
+            <div class="card coral hoverable">
+                <div class="card-content white-text">
+                    <span class="card-title">Шаг 1 - информация о СМИ</span>
+                    {% if massmedia %}
+                        <p>Название СМИ: {{ massmedia.title }}</p>
+                        <p>Тип СМИ: {{ massmedia.type }}</p>
+                        <p>Разрешено аккредетовать журналистов: {{ massmedia.get_count }}</p>
+                        <p>Учредитель: {{ massmedia.founder }}</p>
+                        <p>Уставные задачи: {{ massmedia.statutory_task }}</p>
+                        <p>Юридический адрес: {{ massmedia.address }}</p>
+                        <p>Номер телефона: {{ massmedia.phone }}</p>
+                    {% else %}
+                        <p>Информация по СМИ еще не вносилась. Перейдите по ссылке ниже для добавления сведений</p>
+                    {% endif %}
+                </div>
+                <div class="card-action">
+                    {% if massmedia %}
+                        <a href="{% url 'account:massmedia_update' massmedia.pk %}">Перейти к редактированию</a>
+                    {% else %}
+                        <a href="{% url 'account:massmedia_create' %}">Перейти к редактированию</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card accr-gray hoverable">
+                <div class="card-content white-text">
+                    <span class="card-title">Шаг 3 - генерация пакета документов</span>
+                    {#                        <p></p>#}
+                </div>
+                <div class="card-action white-text">
+                    {% if massmedia and massmedia.reporter_set.all %}
+                        <a href="{% url 'account:account_report' massmedia.id %}">Сгенерировать заявки</a>
+                    {% else %}
+                        Заполните необходимую информацию о СМИ и аккредитуемых журналистах
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+        <div class="col s12 m6">
+            <div class="card accr-dark-gray hoverable">
+                <div class="card-content white-text">
+                    <span class="card-title">Шаг 2 - сведения об аккредитуемых журналистах</span>
+                    {% if massmedia.reporter_count < 1 %}
+                        <p>В этом разделе необходимо заполнить заявки на аккредитуемых журналистов</p>
+                    {% else %}
+                        <p>Подано заявок - {{ massmedia.reporter_count }}</p>
+                        <p>Доступно для подачи - {{ massmedia.get_diff }}</p>
+                    {% endif %}
+
+                </div>
+                <div class="card-action white-text">
+                    {% if not massmedia %}
+                        Заполните информацию о СМИ
+                    {% elif massmedia.reporter_count < massmedia.get_count %}
+                        <a href="{% url 'account:reporter_create' %}">Добавить журналиста</a>
+                    {% else %}
+                        Больше аккредитовать журналистов нельзя
+                    {% endif %}
+                </div>
+            </div>
+            {% if massmedia.reporter_count %}
+                {% for reporter in massmedia.reporter_set.all %}
+                    {% if forloop.counter0|divisibleby:2 %}
+                        <div class="row">
+                    {% endif %}
+
+                <div class="col s12 m6">
+                    <div class="card hoverable">
+                        <div class="card-image">
+                            {% if reporter.image_crop %}
+                            <img src="{{ reporter.image_crop.url }}" class="materialboxed"
+                                 data-caption="{{ reporter }}">
+                            {% else %}
+                                <img src="{% static 'main/img/unknown.jpg' %}" class="materialboxed"
+                                 data-caption="{{ reporter }}">
+                            {% endif %}
+                            <span class="card-title">{{ reporter.post }}</span>
+                        </div>
+                        <div class="card-content">
+                            <p>{{ reporter }}</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="{{ reporter.get_absolute_url }}">Редактировать</a>
+                            <a href="#modal{{ forloop.counter0 }}">Удалить</a>
+                        </div>
+                    </div>
+                    <!-- Modal Structure -->
+                    <div id="modal{{ forloop.counter0 }}" class="modal">
+                        <div class="modal-content">
+                            <h4>Подтверждение удаления информации о журналисте</h4>
+                            <p class="center-align">Вы действительно хотите удалить журналиста {{ reporter }}?</p>
+                            <p class="center-align"><img src="{{ reporter.image.url }}" alt=""
+                                                         class="responsive-img"
+                                                         style="max-width: 300px"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!"
+                               class=" modal-action modal-close waves-effect waves-green btn-flat">Отмена</a>
+                            <form action="{{ reporter.get_remove_url }}" method="post">
+                                {% csrf_token %}
+                                <input type="submit"
+                                       class=" modal-action modal-close waves-effect waves-green btn-flat"
+                                       value="Удалить">
+                            </form>
+                            {#                                <a href=""#}
+                            {#                                   ></a>#}
+                        </div>
+                    </div>
+                </div>
+
+                {#                    <div class="col s12 m6">#}
+                {#                        <div class="card horizontal">#}
+                {#                            <div class="card-image">#}
+                {#                                <img src="{{ reporter.image.url }}">#}
+                {#                            </div>#}
+                {#                            <div class="card-stacked">#}
+                {#                                <div class="card-content">#}
+                {#                                    <p>I am a very simple card. I am good at containing small bits of information.</p>#}
+                {#                                </div>#}
+                {#                                <div class="card-action">#}
+                {#                                    <a href="#">This is a link</a>#}
+                {#                                </div>#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                    </div>#}
+
+                {% if forloop.counter|divisibleby:2 or forloop.last %}
+                    </div>
+                {% endif %}
+                {% endfor %}
+            {% endif %}
+
+        </div>
+    </div>
+
+
+
+
+{% endblock content %}
+
+{% block js %}
+    <script>
+        $(document).ready(function () {
+            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+            $('.modal').modal();
+        });
+        $(document).ready(function () {
+            $('.materialboxed').materialbox();
+        });
+    </script>
+{% endblock %}

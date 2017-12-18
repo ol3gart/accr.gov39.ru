@@ -1,0 +1,181 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+    background-color: #fcfcfc;
+    border-left: 1px solid #c9cace;
+    border-right: 1px solid #c9cace;
+}
+
+.icon-block {
+    padding: 0 15px;
+}
+
+.icon-block .material-icons {
+    font-size: inherit;
+}
+
+.no-margin-bot {
+    margin-bottom: 0;
+}
+
+.no-margin-top {
+    margin-top: 0 !important;
+}
+
+.margin-bot {
+    margin-bottom: 20px;
+}
+
+.tecdoc-table > .row > .col > a, .tecdoc-table > a > * {
+    color: #0288d1;
+}
+
+.tecdoc-table * {
+/ / background-color: white;
+    color: #0288d1;
+}
+
+.tecdoc-table .tecdoc-header {
+    color: #757575;
+    font-weight: bold;
+}
+
+.tecdoc-table > .row {
+/ / margin-bottom: 0;
+}
+
+.collapsible {
+    box-shadow: none;
+    border: none;
+}
+
+#tecdoc-table {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2) !important;
+    border-top: 1px solid #ddd;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: rgb(221, 221, 221);
+    border-right: 1px solid #ddd;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: rgb(221, 221, 221);
+    border-left: 1px solid #ddd;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: rgb(221, 221, 221);
+    background-color: white;
+}
+
+.accr-nav {
+    position: relative;
+    z-index: 1000;
+    height: 100px;
+}
+
+.dark-blue {
+    background-color: #383f49;
+}
+
+.coral {
+    background-color: #fa5c5b;
+}
+
+.coral-text {
+    color: #fa5c5c;
+}
+
+.accr-logo {
+
+    display: block;
+    width: 100px;
+    height: 100px;
+    background-image: url('../img/accr39_logo.png');;
+}
+
+.main-content {
+
+    padding: 55px 100px 30px 130px;
+}
+
+footer {
+    border-left: 1px solid #c9cace;
+    border-right: 1px solid #c9cace;
+    padding-left: 130px;
+}
+
+.accr-logo-1 {
+    padding-left: 130px;
+    margin: auto 0;
+    line-height: 1.5;
+}
+
+.accr-logo-2 {
+    font-size: 1.9rem;
+    line-height: 30px;
+    vertical-align: bottom;
+    margin-top: 25px;
+    display: inline-block;
+}
+
+.accr-logo-3 {
+    line-height: 1.5;
+    font-size: 1.3rem;
+    font-weight: 300;
+    opacity: 0.8;
+}
+
+.accr-logo-4 {
+    line-height: 1.5;
+    font-size: 1.3rem;
+    font-weight: 400;
+    float: right;
+    padding-right: 35px;
+}
+
+.register-small {
+    display: none;
+}
+
+@media (min-width: 992px) and (max-width: 1650px) {
+    .register-large {
+        display: none;
+    }
+
+    .register-small {
+        display: block;
+    }
+}
+
+.no-padding-left {
+    margin-left: 0 !important;
+}
+
+.no-padding-right {
+    margin-right: 0 !important;
+}
+
+/*.accr-breadcrumb {*/
+/*border-left: 1px solid #c9cace;*/
+/*border-right: 1px solid #c9cace;*/
+/*}*/
+
+.accr-gray {
+    background-color: #a3b1ba;
+}
+
+.accr-dark-gray {
+    background-color: #383f49;
+}

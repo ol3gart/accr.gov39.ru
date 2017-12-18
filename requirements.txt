@@ -1,0 +1,4 @@
+Django==1.10.4
+django-registration==2.2
+Pillow==3.4.2
+reportlab==3.3.0
