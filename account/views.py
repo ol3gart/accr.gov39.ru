@@ -322,7 +322,7 @@ class ReportAccount(TemplateView):
     def get(self, *args, **kwargs):
         return self.report()
 
-        @never_cache
+    @never_cache
     def post(self, *args, **kwargs):
         return self.report()
 
