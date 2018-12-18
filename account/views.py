@@ -235,6 +235,8 @@ class ReportAccount(TemplateView):
 
         for reporter in massmedia.reporter_set.all():
             print(reporter)
+            reporter.printed = False
+            reporter.save()
             pdf.setFont("TimesBold", 16)
             pdf.drawString(3 * cm, 27 * cm, "УЧЕТНАЯ КАРТОЧКА КОРРЕСПОНДЕНТА")
             pdf.setFont("Times", 15)
@@ -320,7 +322,7 @@ class ReportAccount(TemplateView):
     def get(self, *args, **kwargs):
         return self.report()
 
-    #
+        @never_cache
     def post(self, *args, **kwargs):
         return self.report()
 
