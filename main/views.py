@@ -75,7 +75,7 @@ class AccessCardView(SingleObjectMixin, FormView, ContextMixin):
         margin = self.margins()
 
         for reporter in reporters:
-            if count % 6 == 0:
+            if count % 5 == 0:
                 pdf.showPage()
                 margin = self.margins()
                 saved = True
